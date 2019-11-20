@@ -1,5 +1,5 @@
 @extends('layouts.appUser')
-@section('title','Dashboard User')
+@section('title','Editing task - '.Auth::user()->name)
              
 
 @push('css')
@@ -7,7 +7,10 @@
         .espacio{
             margin-left: 200px;
             margin-top: 150px;
-        }        
+        } 
+        .izquierda{
+            margin-left: 15px;
+        }       
     </style>
 
 @endpush
@@ -29,7 +32,7 @@
                             <div class="col-md-12">
                               <div class="form-group">
                                 <label class="bmd-label-floating">Name</label>
-                              <input type="text" class="form-control" name="name" value="{{old($task->name)}}" required >
+                              <input type="text" class="form-control" name="name" value="{{$task->name}}" required >
                               </div>
                             </div>
                     </div>
@@ -38,7 +41,7 @@
                             <div class="col-md-12">
                               <div class="form-group">
                                 <label class="bmd-label-floating">Notes</label>
-                              <input type="text" class="form-control" name="notes" required>
+                              <input type="text" class="form-control" name="notes" required value="{{$task->notes}}">
                               </div>
                             </div>
                     </div>
@@ -47,19 +50,24 @@
                             <div class="col-md-12">
                               <div class="form-group">
                                 <label class="bmd-label-floating">Schedule</label>
-                              <input type="date" class="form-control" name="schedule" required>
+                              <input type="date" class="form-control" name="schedule" required value="{{$task->schedule}}">
                               </div>
                             </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-12">
-                          <div class="form-group">
-                            <label class="bmd-label-floating">Status</label>
-                          <input type="checkbox" class="form-control" name="status" value="{{$task->status}}">
-                          </div>
-                        </div>
+                  <div class="row">
+       
+                    <div class="form-check izquierda" >
+                        <label class="form-check-label">   
+                          <input type="checkbox" class="form-check-input" name="status" {{$task->status ? 'checked=checked' : ''}}>
+                          <span class="form-check-sign" >
+                            <span class="check"></span>
+                          </span>
+                          <label for="">Done</label>
+                        </label>
                     </div>
+                           
+                  </div>
                     
                     <button type="submit" class="btn btn-primary">Update</button>
                     <a href="{{ route('user.tasks.index') }}" class="btn btn-danger">Back</a>

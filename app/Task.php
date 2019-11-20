@@ -10,4 +10,6 @@ class Task extends Model
     {
         $this->belongsTo('App\User');
     }
+
+    protected $guarded = [];
 }

@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title','Dashboard Admin')
+@section('title','Creating user - '.Auth::user()->name)
              
 
 @push('css')

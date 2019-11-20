@@ -29,6 +29,8 @@
   <link rel="shortcut icon" href="/list.ico" type="image/x-icon">
         <link rel="icon" href="/list.ico">
 
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
 @stack('css')
 </head>
 <body>

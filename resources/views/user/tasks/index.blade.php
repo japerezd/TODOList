@@ -1,5 +1,5 @@
 @extends('layouts.appUser')
-@section('title','Dashboard User')
+@section('title','Tasks - '.Auth::user()->name)
              
 
 @push('css')
@@ -9,8 +9,7 @@
             margin-left: 200px;
         }
     </style>
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap.min.css">
-{{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css"> --}}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap.min.css">
 @endpush
 
 
@@ -19,6 +18,14 @@
         <div class="col-lg-8 col-md-12 espacio">
             <a href="{{route('user.tasks.create')}}" class="btn btn-primary">Add New</a>
 
+          <form action="{{route('user.tasks.import')}}" method="POST" enctype="multipart/form-data">
+            @csrf
+            {{-- <input type="file" name="file" accept=".csv">
+            <br>
+            <button class="btn btn-success">Import tasks</button> --}}
+            <a class="btn btn-warning" href="{{route('user.tasks.export')}}">Export Tasks</a>
+          </form>
+
             @include('layouts.partial.msg')
           <div class="card">
             <div class="card-header card-header-danger">
@@ -26,7 +33,8 @@
               <p class="card-category">Only these actions can be done by user</p>
             </div>
             <div class="card-body table-responsive">
-              <table class="table table-striped table-bordered" style="width:120%">
+
+              <table id="table" class="table table-striped table-bordered" style="width:100%">
                 <thead class="text-warning">
                   <th>Name</th>
                   <th>Notes</th>
@@ -39,35 +47,36 @@
                  @foreach ($tasks as $task)
                      <tr>
                          <th>{{$task->name}}</th>
-                         <th>{{$task->notes}}</th>
-                         <th>{{$task->schedule}}</th>
+                         <td>{{$task->notes}}</td>
+                         <td>{{$task->schedule}}</td>
                          
-                         <th>
+                         <td>
                             <div class="form-check" align="center">
 
-                                <label class="form-check-label">
-                                    <input class="form-check-input" name="status" type="checkbox" value="{{$task->status}}"
-                                    {{$task->status==1 ? 'checked' : ''}}>
-                                    
-                                    <span class="form-check-sign">
-                                      <span class="check"></span>
-                                    </span>
-                                  </label>
+                                  @if ($task->status == 1)
+                                      <span class="badge badge-success">Done</span>
+                                  @elseif($task->status == 0 && $otherTime > $task->schedule)
+                                  <span class="badge badge-danger">Overdue</span>
+                                  @else
+                                  <span class="badge badge-warning">To do</span>
+                                  @endif
+
+                                 
 
                             </div>
-                           {{-- {{$task->status}}        --}}
-                        </th>
-                         <th>
+
+                        </td>
+                         <td>
                            <a href="{{route('user.tasks.edit',$task->id)}}" class="btn btn-primary btn-sm">
                               <i class="material-icons"> mode_edit </i>
                           </a>
 
 
-                          {{-- <form id="delete-form-{{ $task->id }}" action="{{ route('users.tasks.destroy', $task->id) }}" style="display:none;" method="POST">
+                          <form id="delete-form-{{ $task->id }}" action="{{ route('user.tasks.destroy', $task->id) }}" style="display:none;" method="POST">
                             @csrf
                             @method('DELETE')
 
-                          </form> --}}
+                          </form>
 
                           <button type="button" class="btn btn-danger btn-sm" onclick="if(confirm('Are you sure you want to delete this?')){
                             event.preventDefault();
@@ -78,14 +87,14 @@
                           </button>
 
                       
-                          </th>
+                          </td>
 
                      </tr>
                  @endforeach
                 </tbody>
               </table>
             </div>
-            {{$tasks->links()}}
+            
           </div>
         </div>
       </div>
@@ -96,14 +105,15 @@
 
 
 @push('scripts')
-<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap.min.js"></script>
-{{-- <script src="https://code.jquery.com/jquery-3.3.1.js"></script> --}}
-
-    <script>
-        $(document).ready(function() {
-            $('#table').DataTable();
-        });
-    </script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+<script>
+  $('#table').DataTable({
+    "iDisplayLength": 5,
+    "aLengthMenu": [
+      [5, 10, 25, 50, -1],
+      [5, 10, 25, 50, "all"]
+    ]
+  });
+</script>
 @endpush
 

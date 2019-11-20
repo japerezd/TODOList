@@ -1,5 +1,5 @@
 @extends('layouts.appUser')
-@section('title','Dashboard User')
+@section('title','Creating task - '.Auth::user()->name)
              
 
 @push('css')

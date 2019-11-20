@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title','Dashboard Admin')
+@section('title','Editing users - '.Auth::user()->name)
              
 
 @push('css')
@@ -27,7 +27,7 @@
               @include('layouts.partial.msg')
             </div>
             <div class="card-body table-responsive">
-                <form action="{{route('admin.users.update',$user->id)}}" method="POST">
+                <form action="{{route('admin.users.update',['user'=>$user->id]) }}" method="POST">
                     @csrf
                     @method('PUT')
                   <div class="row">
@@ -61,7 +61,7 @@
                         @foreach ($roles as $role)
                              <div class="form-check izquierda" >
                                 <label class="form-check-label">   
-                                    <input type="checkbox" class="form-check-input" name="roles[]" value="{{$role->id}}">
+                                    <input type="checkbox" class="form-check-input" name="roles[]" value="{{$role->id}}" {{$user->hasAnyRole($role->name) ? 'checked' : ''}}>
                                     <span class="form-check-sign" >
                                         <span class="check"></span>
                                     </span>

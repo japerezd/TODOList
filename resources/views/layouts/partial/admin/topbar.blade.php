@@ -3,7 +3,7 @@
     <div class="container-fluid">
       <div class="navbar-wrapper">
         {{-- <a class="navbar-brand" href="#pablo">Dashboard</a> --}}
-        <h3>Welcome, {{Auth::user()->name}}</h3>
+        <h3>Welcome {{Auth::user()->name}}</h3>
       </div>
       <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
         <span class="sr-only">Toggle navigation</span>
@@ -17,12 +17,13 @@
      
 
           <li>             
-             @impersonate()
+             {{-- @impersonate()
              <button class="btn btn-warning">
 
                <a href="http:{{route('admin.impersonate.destroy')}}">Stop impersonating</a>
              </button>
-               @endimpersonate
+               @endimpersonate --}}
+
           <a href="{{route('logout')}}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
             <i class="material-icons">exit_to_app</i>
             {{-- <p class="hidden-lg hidden-md">Logout</p> --}}

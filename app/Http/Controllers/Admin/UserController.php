@@ -15,7 +15,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
-        return view('admin.manageusers.index',compact('users'))->with('users',User::paginate(10));
+        return view('admin.manageusers.index',compact('users'));
 
     }
   
@@ -80,7 +80,7 @@ class UserController extends Controller
 
     public function destroy($id)
     {
-        if(Auth::user()->id == $id){
+        if(Auth::user()->id == $id || Auth::user()->hasAnyRole('admin')){
             return redirect()->route('admin.users.index')->with('warning','You are not allowed to delete yourself.');;
         }
 

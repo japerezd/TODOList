@@ -2,7 +2,7 @@
 <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
     <div class="container-fluid">
       <div class="navbar-wrapper">
-      <h2>Welcome {{Auth::user()->name}}</h2>
+      <h3>Welcome {{Auth::user()->name}}</h3>
       </div>
       <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
         <span class="sr-only">Toggle navigation</span>
@@ -13,9 +13,16 @@
       <div class="collapse navbar-collapse justify-content-end">
       
         <ul class="navbar-nav">
-     
-
+    
           <li>
+
+              @impersonate()
+              <button class="btn btn-warning">
+ 
+                <a href="{{route('admin.impersonate.destroy')}}">Stop impersonating</a>
+              </button>
+                @endimpersonate
+
           <a href="{{route('logout')}}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
             <i class="material-icons btn-danger">exit_to_app</i>
             {{-- <p class="hidden-lg hidden-md">Logout</p> --}}

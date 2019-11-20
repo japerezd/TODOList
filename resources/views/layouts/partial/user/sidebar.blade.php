@@ -17,18 +17,26 @@
             <p>Dashboard</p>
           </a>
         </li>
+        @hasrole('admin')
+        <li class="{{Request::is('admin/users*') ? 'active' : ''}} ">
+          <a class="nav-link" href="{{route('admin.users.index')}}">
+            <i class="material-icons">person</i>
+            <p>Manage Users</p>
+          </a>
+        </li>
+        @endhasrole
         <li class="{{Request::is('user/tasks*') ? 'active' : ''}} ">
           <a class="nav-link" href="{{route('user.tasks.index')}}">
             <i class="material-icons">home_work</i>
             <p>Manage Tasks</p>
           </a>
         </li>
-        <li class="nav-item ">
-          <a class="nav-link" href="#">
+        {{-- <li class="{{Request::is('user/calendar*') ? 'active' : ''}} ">
+          <a class="nav-link" href="{{route('user.calendar.index')}}">
             <i class="material-icons">assessment</i>
             <p>Exams</p>
           </a>
-        </li>
+        </li> --}}
  
       </ul>
     </div>

@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title','Dashboard Admin')
+@section('title','Managing users by '.Auth::user()->name)
              
 
 @push('css')
@@ -9,8 +9,8 @@
             margin-left: 200px;
         }
     </style>
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap.min.css">
-{{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css"> --}}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap.min.css">
+
 @endpush
 
 
@@ -26,7 +26,8 @@
               <p class="card-category">Only these actions can be done by the admin</p>
             </div>
             <div class="card-body table-responsive">
-              <table class="table table-striped table-bordered" style="width:120%">
+              
+              <table id="table" class="table table-striped table-bordered" style="width:100%">
                 <thead class="text-warning">
                   <th>ID</th>
                   <th>Name</th>
@@ -71,19 +72,26 @@
                           </button>
 
                     @endif
-
+                          @if($user->hasAnyRole('admin'))
+                          <a href="#">
+                            <i class="material-icons btn-success">
+                              supervised_user_circle
+                              </i>
+                          </a>
+                          @else
                           <a href="{{route('admin.impersonate',$user->id)}}">
                             <i class="material-icons btn-success">
                               supervised_user_circle
                               </i>
                           </a>
+                          @endif
                           </th>
 
                      </tr>
                  @endforeach
                 </tbody>
               </table>
-              {{$users->links()}}
+              
             </div>
           </div>
         </div>
@@ -95,14 +103,16 @@
 
 
 @push('scripts')
-<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap.min.js"></script>
-{{-- <script src="https://code.jquery.com/jquery-3.3.1.js"></script> --}}
 
-    <script>
-        $(document).ready(function() {
-            $('#table').DataTable();
-        });
-    </script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+<script>
+  $('#table').DataTable({
+    "iDisplayLength": 5,
+    "aLengthMenu": [
+      [5, 10, 25, 50, -1],
+      [5, 10, 25, 50, "all"]
+    ]
+  });
+</script>
 @endpush
 
