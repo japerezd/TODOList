@@ -21,7 +21,8 @@ class UserController extends Controller
   
     public function create()
     {
-        return view('admin.manageusers.create');
+        $roles = Role::all();
+        return view('admin.manageusers.create',compact('roles'));
     }
 
     public function store(Request $request)
@@ -30,14 +31,15 @@ class UserController extends Controller
             'name'      => 'required',
             'email'     => 'required|email',
             'password'  => 'required',
+            'roles'     => 'required',
         ]);
         $user = new User();
-
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
 
         $user->save();
+        $user->roles()->sync($request->roles);
         
         return redirect()->route('admin.users.index')->with('successMsg','User successfully created.');
     }
@@ -48,6 +50,10 @@ class UserController extends Controller
         $roles = Role::all();
         if(Auth::user()->id == $id){
             return redirect()->route('admin.users.index')->with('warning','You are not allowed to edit yourself.');
+        }
+
+        if($user->hasAnyRole('admin')){
+            return redirect()->route('admin.users.index')->with('warning','You are not allowed to edit other admins.');
         }
         return view('admin.manageusers.edit',compact("user",'roles'));
     }
@@ -62,10 +68,15 @@ class UserController extends Controller
             "password" => 'required',
         ]);
         if(Auth::user()->id == $id){
-            return redirect()->route('admin.users.index')->with('warning','You are not allowed to edit yourself.');;
+            return redirect()->route('admin.users.index')->with('warning','You are not allowed to update yourself.');
         }
+
+        
         $user = User::find($id);
         
+        if($user->hasAnyRole('admin')){
+         return redirect()->route('admin.users.index')->with('warning','You are not allowed to update other admins.');
+        }
 
         $user->name = $request->name;
         $user->email = $request->email;
@@ -80,11 +91,16 @@ class UserController extends Controller
 
     public function destroy($id)
     {
-        if(Auth::user()->id == $id || Auth::user()->hasAnyRole('admin')){
-            return redirect()->route('admin.users.index')->with('warning','You are not allowed to delete yourself.');;
+        if(Auth::user()->id == $id){
+            return redirect()->route('admin.users.index')->with('warning','You are not allowed to delete yourself.');
         }
 
         $user = User::find($id);
+
+        if($user->hasAnyRole('admin')){
+         return redirect()->route('admin.users.index')->with('warning','You are not allowed to delete other admins.');
+        }
+
         if($user){
             $user->roles()->detach();
             $user->delete();
@@ -93,4 +109,6 @@ class UserController extends Controller
 
         return redirect()->route('admin.users.index')->with('successMsg','This user can not be deleted.');
     }
+
+    
 }

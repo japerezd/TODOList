@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class ImpersonateController extends Controller
 {
@@ -14,6 +15,11 @@ class ImpersonateController extends Controller
         //si un usuario ha sido encontrado
         if($user){
             session()->put('impersonate',$user->id);
+        }
+        //if user is an admin
+        if($user->hasAnyRole('admin') || Auth::user()->hasAnyRole('admin')){
+            session()->forget('impersonate');
+            return redirect()->route('admin.users.index')->with('warning','You are not allowed to impersonate admins.');
         }
 
         return redirect('/user/dashboard');

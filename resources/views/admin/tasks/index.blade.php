@@ -7,6 +7,14 @@
             margin-top: 150px;
             margin-left: 200px;
         }
+
+        .boton{
+          width: 155px;
+          margin: 0;
+          position: absolute;
+          top: 0px;
+          right: 720px;
+        }
     </style>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap.min.css">
 @endpush
@@ -15,9 +23,9 @@
 @section('content')
 
         <div class="col-lg-8 col-md-12 espacio">
-            <a href="{{route('admin.tasks.create')}}" class="btn btn-primary">Add New</a>
+            <a href="{{route('admin.tasks.create')}}" class="btn btn-primary">New task</a>
 
-          <form action="{{route('admin.tasks.import')}}" method="POST" enctype="multipart/form-data">
+          <form action="{{route('admin.tasks.import')}}" method="POST" enctype="multipart/form-data" class="boton">
             @csrf
             {{-- <input type="file" name="file" accept=".csv">
             <br>

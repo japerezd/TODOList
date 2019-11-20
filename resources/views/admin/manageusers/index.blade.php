@@ -17,7 +17,7 @@
 @section('content')
 
         <div class="col-lg-8 col-md-12 espacio">
-            <a href="{{ route('admin.users.create') }}" class="btn btn-info">Add New</a>
+            <a href="{{ route('admin.users.create') }}" class="btn btn-info">New user</a>
 
             @include('layouts.partial.msg')
           <div class="card">
@@ -72,7 +72,7 @@
                           </button>
 
                     @endif
-                          @if($user->hasAnyRole('admin'))
+                         {{--  @if($user->hasAnyRole('admin'))
                           <a href="#">
                             <i class="material-icons btn-success">
                               supervised_user_circle
@@ -84,7 +84,12 @@
                               supervised_user_circle
                               </i>
                           </a>
-                          @endif
+                          @endif --}}
+                          <a href="{{route('admin.impersonate',$user->id)}}">
+                            <i class="material-icons btn-success">
+                              supervised_user_circle
+                              </i>
+                          </a>
                           </th>
 
                      </tr>

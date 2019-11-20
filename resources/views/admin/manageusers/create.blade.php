@@ -54,6 +54,23 @@
                               </div>
                             </div>
                     </div>
+
+                    <div class="row">
+                      @foreach ($roles as $role)
+                           <div class="form-check izquierda" >
+                              <label class="form-check-label">   
+                                  <input type="checkbox" class="form-check-input" name="roles[]" value="{{$role->id}}">
+                                  <span class="form-check-sign" >
+                                      <span class="check"></span>
+                                  </span>
+                                  
+                                  <label>{{$role->name}}</label> &nbsp;
+                              </label>
+                          </div>
+                      @endforeach
+                            
+                     
+                  </div>
                     
                     <button type="submit" class="btn btn-info">Create</button>
                     <a href="{{ route('admin.users.index') }}" class="btn btn-danger">Back</a>
