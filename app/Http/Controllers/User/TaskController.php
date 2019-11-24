@@ -4,13 +4,14 @@ namespace App\Http\Controllers\User;
 
 use App\Task;
 use App\User;
+use DateTime;
 use Carbon\Carbon;
+use App\Exports\CsvExport;
+use App\Imports\CsvImport;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Imports\CsvImport;
-use App\Exports\CsvExport;
 
 class TaskController extends Controller
 {
@@ -18,8 +19,9 @@ class TaskController extends Controller
     public function index()
     {
         $otherTime = date("Y-m-d");
+        $otherTimeFinal = DateTime::createFromFormat('Y-m-d',$otherTime);
         $tasks = Task::where('user_id','=',Auth::user()->id)->get();
-        return view('user.tasks.index',compact('tasks','otherTime'));
+        return view('user.tasks.index',compact('tasks','otherTime','otherTimeFinal'));
     }
 
     public function create()

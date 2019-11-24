@@ -17,7 +17,7 @@ class ImpersonateController extends Controller
             session()->put('impersonate',$user->id);
         }
         //if user is an admin
-        if($user->hasAnyRole('admin') || Auth::user()->hasAnyRole('admin')){
+        if($user->hasAnyRole('admin')){
             session()->forget('impersonate');
             return redirect()->route('admin.users.index')->with('warning','You are not allowed to impersonate admins.');
         }

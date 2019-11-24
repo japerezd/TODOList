@@ -15,6 +15,15 @@
           top: 0px;
           right: 720px;
         }
+
+      .forma{
+        padding-left:auto;
+        text-align: center;
+      }
+
+      .gris{
+        color: grey;
+      }
     </style>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap.min.css">
 @endpush
@@ -55,23 +64,37 @@
                      <tr>
                          <th>{{$task->name}}</th>
                          <td>{{$task->notes}}</td>
-                         <td>{{$task->schedule}}</td>
+                         <td style="text-align:center">{{$task->schedule}}</td>
                          
                          <td>
-                            <div class="form-check" align="center">
+                            <div class="forma">
 
                                   @if ($task->status == 1)
-                                      <span class="badge badge-success">Done</span>
+                                  <span class="badge badge-success">Done</span>
+
                                   @elseif($task->status == 0 && $otherTime > $task->schedule)
+                                 
                                   <span class="badge badge-danger">Overdue</span>
+                                  
                                   @else
                                   <span class="badge badge-warning">To do</span>
+                                  @php
+                                    $scheduleFinal =  DateTime::createFromFormat('Y-m-d',$task->schedule);
+                                    $days = $otherTimeFinal->diff($scheduleFinal)
+                                  @endphp
+                                    @if($days->d > 1)
+                                    <p class="gris">{{"In ".$days->d. " days, ".$scheduleFinal->format('l')}}</p>
+                                        
+                                    @elseif($days->d == 1)
+                                    <p class="gris">{{"Tomorrow"}}</p>
+                                    @else
+                                      <p class="gris">{{"Today"}}</p>
+                                        
+                                    @endif
+
                                   @endif
 
-                                 
-
                             </div>
-
                         </td>
                          <td>
                            <a href="{{route('admin.tasks.edit',$task->id)}}" class="btn btn-primary btn-sm">

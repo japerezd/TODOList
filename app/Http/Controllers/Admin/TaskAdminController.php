@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Task;
+use DateTime;
 use App\Exports\CsvExport;
 use App\Imports\CsvImport;
 use Illuminate\Http\Request;
@@ -15,8 +16,9 @@ class TaskAdminController extends Controller
     public function index()
     {
         $otherTime = date("Y-m-d");
+        $otherTimeFinal = DateTime::createFromFormat('Y-m-d',$otherTime);
         $tasks = Task::where('user_id','=',Auth::user()->id)->get();
-        return view('admin.tasks.index',compact('tasks','otherTime'));
+        return view('admin.tasks.index',compact('tasks','otherTime','otherTimeFinal'));
     }
 
     public function create()
