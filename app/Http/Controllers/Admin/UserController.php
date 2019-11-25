@@ -66,6 +66,7 @@ class UserController extends Controller
             "name"     => 'required',
             "email"    => 'required|email',
             "password" => 'required',
+            "roles"    => 'required'
         ]);
         if(Auth::user()->id == $id){
             return redirect()->route('admin.users.index')->with('warning','You are not allowed to update yourself.');

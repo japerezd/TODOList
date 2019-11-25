@@ -184,8 +184,8 @@
                                 <div class="icon">
                                     <i class="pe-7s-note2"></i>
                                 </div>
-                                <h4>Smart Notifications on hands</h4>
-                                <p>Automatic text and email reminders make sure customers always remember their upcoming appointments.</p>
+                                <h4>Remaining time of tasks</h4>
+                                <p>You will see the remaning time of your homework, projects or whatever you want to do, with that feature you will be more responsible and you will finish your tasks on time.</p>
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -221,7 +221,7 @@
                                 </div>
                                 <div class="carousel-testimonial-caption">
                                     <p>Drake, Artist</p>
-                                    <h3>"This is one of the most awesome apps I've ever seen! Wish you luck Creative Tim!"</h3>
+                                    <h3>"This is one of the most awesome apps I've ever seen! Wish you luck!"</h3>
                                 </div>
                             </div>
                             <div class="item">

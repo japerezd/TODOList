@@ -32,7 +32,7 @@
                             <div class="col-md-12">
                               <div class="form-group">
                                 <label class="bmd-label-floating">Name</label>
-                              <input type="text" class="form-control" name="name" required >
+                              <input type="text" class="form-control" name="name" required value="{{old('name')}}">
                               </div>
                             </div>
                     </div>
@@ -41,7 +41,7 @@
                             <div class="col-md-12">
                               <div class="form-group">
                                 <label class="bmd-label-floating">Email</label>
-                              <input type="email" class="form-control" name="email" required>
+                              <input type="email" class="form-control" name="email" required value="{{old('email')}}">
                               </div>
                             </div>
                     </div>
@@ -50,7 +50,7 @@
                             <div class="col-md-12">
                               <div class="form-group">
                                 <label class="bmd-label-floating">Password</label>
-                              <input type="password" class="form-control" name="password" required>
+                              <input type="password" class="form-control" name="password" required value="{{old('password')}}">
                               </div>
                             </div>
                     </div>
